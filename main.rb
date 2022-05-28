@@ -37,9 +37,20 @@ class Board
 
     else
       board_array[move_index] = player.player_symbol
+      if winner?(player)
+        puts "#{player.name} WON"
+      end
     end
 
     create_board
+  end
+
+  def winner?(player)
+    if board_array[0..2].all? { |number| number == player.player_symbol } || board_array[3..5].all? { |number| number == player.player_symbol } || board_array[6..8].all? { |number| number == player.player_symbol }
+      true
+    else
+      false
+    end
   end
 end
 
