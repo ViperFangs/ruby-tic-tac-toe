@@ -37,11 +37,5 @@ class Board
   end
 end
 
-class Player
-  def initialize(symbol)
-    @player_symbol = symbol
-  end
-end
-
 new_board = Board.new
 new_board.make_move(1, 'X')
