@@ -32,34 +32,31 @@ class Board
   def place_move(move, player)
     move_index = board_array.index(move)
 
-    if move_index == nil
-      puts "Invalid choice, try again!"
+    if move_index.nil?
+      puts 'Invalid choice, try again!'
 
     else
       board_array[move_index] = player.player_symbol
     end
-  
+
     create_board
   end
-
 end
 
 class Player
-
   attr_reader :player_symbol, :name
 
   def initialize(name, symbol)
     @name = name
     @player_symbol = symbol
   end
-
 end
 
 new_board = Board.new
-player = Player.new("Aarya", 'X')
+player = Player.new('Aarya', 'X')
 
 while 1
-puts "\nEnter a choice: "
-user_choice = gets.chomp.to_i
-new_board.place_move(user_choice, player)
+  puts "\nEnter a choice: "
+  user_choice = gets.chomp.to_i
+  new_board.place_move(user_choice, player)
 end
