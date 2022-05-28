@@ -14,6 +14,8 @@ class Board
   end
 
   def create_board
+    puts "\n"
+
     board_array.each_with_index do |current_value, index|
       if [2, 5, 8].include?(index)
         puts " #{current_value}"
@@ -24,6 +26,22 @@ class Board
       end
     end
   end
+
+  public # change to protected later
+
+  def make_move(move, symbol)
+    move_index = board_array.index(move)
+    board_array[move_index] = symbol
+
+    create_board
+  end
+end
+
+class Player
+  def initialize(symbol)
+    @player_symbol = symbol
+  end
 end
 
 new_board = Board.new
+new_board.make_move(1, 'X')
