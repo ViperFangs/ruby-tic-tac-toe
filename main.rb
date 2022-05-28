@@ -1,16 +1,14 @@
 class Board
 
   def initialize
+
     @BOARD_SIZE = 3
-    @board_array = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ]
+    @board_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
     self.create_board
   end
 
-  attr_accessor :BOARD_SIZE, :board_array
+  attr_accessor :board_array
 
   private
 
@@ -19,14 +17,18 @@ class Board
   end
 
   def create_board
-    board_array.each_with_index do |row, row_index|
+    self.board_array.each_with_index do |current_value, index|
 
-      puts row.to_s
-
-      create_line
+      if index == 2 || index == 5 || index == 8
+        puts" #{current_value}"
+        create_line
       
+      else
+        print " #{current_value} |"
+      end
+
     end
-  
+
   end
 
 end
