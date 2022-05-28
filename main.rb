@@ -1,11 +1,16 @@
 class Board
   def initialize
     @board_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    @winning_combinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    @game_over = false
+    @available_moves = 9
 
     create_board
   end
 
-  attr_accessor :board_array
+  attr_accessor :board_array, :available_moves
+  attr_writer :game_over
+  attr_reader :winning_combinations
 
   private
 
@@ -37,8 +42,10 @@ class Board
 
     else
       board_array[move_index] = player.player_symbol
+      self.available_moves -= 1
       if winner?(player)
         puts "#{player.name} WON"
+        self.game_over = true
       end
     end
 
@@ -46,11 +53,7 @@ class Board
   end
 
   def winner?(player)
-    if board_array[0..2].all? { |number| number == player.player_symbol } || board_array[3..5].all? { |number| number == player.player_symbol } || board_array[6..8].all? { |number| number == player.player_symbol }
-      true
-    else
-      false
-    end
+    winning_combinations.any? { |combination| combination.all? { |index| board_array[index] == player.player_symbol } }
   end
 end
 
