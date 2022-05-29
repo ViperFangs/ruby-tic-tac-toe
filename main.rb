@@ -4,8 +4,7 @@ class Board
     create_board
   end
 
-  attr_accessor :board_array, :available_moves
-  attr_writer :game_over
+  attr_accessor :board_array, :available_moves, :game_over
   attr_reader :winning_combinations
 
   private
@@ -97,26 +96,40 @@ end
 
 class Game
   attr_accessor :player_one_name, :player_one_input, :player_two_name, :player_two_input, :board
+  attr_accessor :user_one_choice, :user_two_choice, :player_one, :player_two
 
   def initialize
     puts 'Welcome to Tic-Tac-Toe'
     create_users
-    @board = Board.new
+    self.board = Board.new
+    play_game
   end
 
   def create_users
     print "\nPlayer 1, choose your name: "
-    @player_one_name = gets.chomp
-    print "\n#{player_one_name}, choose your symbol: "
-    @player_one_input = gets.chomp
+    self.player_one_name = gets.chomp
+    print "#{player_one_name}, choose your symbol: "
+    self.player_one_input = gets.chomp
 
     print "\nPlayer 2, choose your name: "
-    @player_two_name = gets.chomp
-    print "\n#{player_two_name}, choose your symbol: "
-    @player_two_input = gets.chomp
+    self.player_two_name = gets.chomp
+    print "#{player_two_name}, choose your symbol: "
+    self.player_two_input = gets.chomp
 
-    @player_one = Player.new(player_one_name, player_one_input)
-    @player_two = Player.new(player_two_name, player_two_input)
+    self.player_one = Player.new(player_one_name, player_one_input)
+    self.player_two = Player.new(player_two_name, player_two_input)
+  end
+
+  def play_game
+    return if board.game_over
+
+    print "\nEnter your choice, #{player_one_name}: "
+    self.user_one_choice = gets.chomp.to_i
+    board.place_move(user_one_choice, player_one)
+
+    print "\nEnter your choice, #{player_two_name}: "
+    self.user_two_choice = gets.chomp.to_i
+    board.place_move(user_two_choice, player_two)
   end
 end
 
@@ -124,9 +137,9 @@ end
 # player = Player.new('Aarya', 'X')
 
 # while 1
-#   print "\nEnter a choice: "
-#   user_choice = gets.chomp.to_i
-#   new_board.place_move(user_choice, player)
+  # print "\nEnter a choice: "
+  # user_choice = gets.chomp.to_i
+  # board.place_move(user_choice, player)
 # end
 
 Game.new
