@@ -38,6 +38,7 @@ class Board
     move_index = board_array.index(move)
 
     if move_index.nil?
+      create_board
       raise StandardError.new "\nInvalid choice, try again!"
 
     else
@@ -51,6 +52,7 @@ class Board
 
   def winner?(player)
     if winning_combinations.any? { |combination| combination.all? { |index| board_array[index] == player.player_symbol } }
+      create_board
       puts "\n#{player.name.upcase} HAS WON THE GAME!"
       self.game_over = true
       reset_game
@@ -118,6 +120,7 @@ class Game
 
     self.player_one = Player.new(player_one_name, player_one_input)
     self.player_two = Player.new(player_two_name, player_two_input)
+    system('clear')
   end
 
   def play_game
@@ -129,6 +132,7 @@ class Game
     begin
       print "\nEnter your move, #{player.name}: "
       self.user_move = gets.chomp.to_i
+      system('clear')
       board.place_move(user_move, player)
     rescue StandardError => e
       puts e
