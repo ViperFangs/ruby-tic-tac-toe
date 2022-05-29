@@ -39,7 +39,7 @@ class Board
 
     if move_index.nil?
       create_board
-      raise StandardError.new "\nInvalid choice, try again!"
+      raise StandardError, "\nInvalid choice, try again!"
 
     else
       board_array[move_index] = player.player_symbol
@@ -51,7 +51,11 @@ class Board
   end
 
   def winner?(player)
-    if winning_combinations.any? { |combination| combination.all? { |index| board_array[index] == player.player_symbol } }
+    if winning_combinations.any? do |combination|
+         combination.all? do |index|
+           board_array[index] == player.player_symbol
+         end
+       end
       create_board
       puts "\n#{player.name.upcase} HAS WON THE GAME!"
       self.game_over = true
@@ -97,8 +101,8 @@ class Player
 end
 
 class Game
-  attr_accessor :player_one_name, :player_one_input, :player_two_name, :player_two_input, :board
-  attr_accessor :user_one_choice, :user_two_choice, :player_one, :player_two, :user_move
+  attr_accessor :player_one_name, :player_one_input, :player_two_name, :player_two_input, :board, :user_one_choice,
+                :user_two_choice, :player_one, :player_two, :user_move
 
   def initialize
     puts 'Welcome to Tic-Tac-Toe'
@@ -129,17 +133,14 @@ class Game
   end
 
   def play_game_helper(player)
-    begin
-      print "\nEnter your move, #{player.name}: "
-      self.user_move = gets.chomp.to_i
-      system('clear')
-      board.place_move(user_move, player)
-    rescue StandardError => e
-      puts e
-      retry
-    end
+    print "\nEnter your move, #{player.name}: "
+    self.user_move = gets.chomp.to_i
+    system('clear')
+    board.place_move(user_move, player)
+  rescue StandardError => e
+    puts e
+    retry
   end
-
 end
 
 Game.new
