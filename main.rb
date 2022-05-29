@@ -51,7 +51,11 @@ class Board
   end
 
   def winner?(player)
-    if winning_combinations.any? { |combination| combination.all? { |index| board_array[index] == player.player_symbol } } 
+    if winning_combinations.any? do |combination|
+         combination.all? do |index|
+           board_array[index] == player.player_symbol
+         end
+       end
       puts "\n#{player.name.upcase} HAS WON THE GAME!"
       self.game_over = true
       reset_game
@@ -61,7 +65,7 @@ class Board
   end
 
   def stalemate?
-    return false if available_moves > 0
+    return false if available_moves.positive?
 
     puts "\nThe game has ended in a stalemate"
     reset_game
