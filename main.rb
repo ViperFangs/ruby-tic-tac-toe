@@ -38,7 +38,7 @@ class Board
     move_index = board_array.index(move)
 
     if move_index.nil?
-      puts 'Invalid choice, try again!'
+      raise StandardError.new "\nInvalid choice, try again!"
 
     else
       board_array[move_index] = player.player_symbol
@@ -96,13 +96,13 @@ end
 
 class Game
   attr_accessor :player_one_name, :player_one_input, :player_two_name, :player_two_input, :board
-  attr_accessor :user_one_choice, :user_two_choice, :player_one, :player_two
+  attr_accessor :user_one_choice, :user_two_choice, :player_one, :player_two, :user_move
 
   def initialize
     puts 'Welcome to Tic-Tac-Toe'
     create_users
     self.board = Board.new
-    play_game
+    play_game until board.game_over
   end
 
   def create_users
@@ -121,25 +121,21 @@ class Game
   end
 
   def play_game
-    return if board.game_over
-
-    print "\nEnter your choice, #{player_one_name}: "
-    self.user_one_choice = gets.chomp.to_i
-    board.place_move(user_one_choice, player_one)
-
-    print "\nEnter your choice, #{player_two_name}: "
-    self.user_two_choice = gets.chomp.to_i
-    board.place_move(user_two_choice, player_two)
+    play_game_helper(player_one)
+    play_game_helper(player_two)
   end
+
+  def play_game_helper(player)
+    begin
+      print "\nEnter your move, #{player.name}: "
+      self.user_move = gets.chomp.to_i
+      board.place_move(user_move, player)
+    rescue StandardError => e
+      puts e
+      retry
+    end
+  end
+
 end
-
-# new_board = Board.new
-# player = Player.new('Aarya', 'X')
-
-# while 1
-  # print "\nEnter a choice: "
-  # user_choice = gets.chomp.to_i
-  # board.place_move(user_choice, player)
-# end
 
 Game.new
