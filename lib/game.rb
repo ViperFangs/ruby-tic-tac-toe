@@ -15,6 +15,8 @@ class Game
     play_game
   end
 
+  private
+
   def play_game_helper(player)
     user_move = select_move(player)
     system('clear')
