@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :board, :player_one, :player_two, :user_move
+  attr_accessor :board, :player_one, :player_two
 
   def initialize(player_one, player_two, board = Board.new)
     @player_one = player_one
@@ -16,12 +16,17 @@ class Game
   end
 
   def play_game_helper(player)
-    print "\nEnter your move, #{player.name}: "
-    self.user_move = gets.chomp.to_i
+    user_move = select_move(player)
     system('clear')
     board.place_move(user_move, player)
+
   rescue StandardError => e
     puts e
     retry
+  end
+
+  def select_move(player)
+    print "\nEnter your move, #{player.name}: "
+    gets.chomp.to_i
   end
 end
