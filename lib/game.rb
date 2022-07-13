@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :player_one_name, :player_one_input, :player_two_name, :player_two_input, :board, :user_one_choice,
+  attr_accessor :player_one_name, :player_one_symbol, :player_two_name, :player_two_symbol, :board, :user_one_choice,
                 :user_two_choice, :player_one, :player_two, :user_move
 
   def initialize
@@ -10,19 +10,25 @@ class Game
   end
 
   def create_users
-    print "\nPlayer 1, choose your name: "
-    self.player_one_name = gets.chomp
-    print "#{player_one_name}, choose your symbol: "
-    self.player_one_input = gets.chomp
+    self.player_one_name = user_name('Player 1')
+    self.player_one_symbol = select_symbol(player_one_name)
 
-    print "\nPlayer 2, choose your name: "
-    self.player_two_name = gets.chomp
-    print "#{player_two_name}, choose your symbol: "
-    self.player_two_input = gets.chomp
+    self.player_two_name = user_name('Player 2')
+    self.player_two_symbol = select_symbol(player_two_name)
 
-    self.player_one = Player.new(player_one_name, player_one_input)
-    self.player_two = Player.new(player_two_name, player_two_input)
+    self.player_one = Player.new(player_one_name, player_one_symbol)
+    self.player_two = Player.new(player_two_name, player_two_symbol)
     system('clear')
+  end
+
+  def user_name(player)
+    print "\n#{player}, choose your name: "
+    gets.chomp
+  end
+
+  def select_symbol(name)
+    print "\n#{name}, choose your symbol: "
+    gets.chomp
   end
 
   def play_game
