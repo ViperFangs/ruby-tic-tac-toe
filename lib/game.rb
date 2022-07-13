@@ -21,7 +21,6 @@ class Game
     user_move = select_move(player)
     system('clear')
     board.place_move(user_move, player)
-
   rescue StandardError => e
     puts e
     retry
