@@ -17,4 +17,3 @@ player_two = create_user(2)
 system('clear')
 
 Game.new(player_one, player_two).play_game
-
