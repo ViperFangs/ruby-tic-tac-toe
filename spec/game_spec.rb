@@ -23,7 +23,7 @@ describe Game do
         allow(board_double).to receive(:game_over).and_return(false, true)
       end
 
-      it 'returns from play_game' do
+      it 'calls play_game_helper twice' do
         expect(board_double).to receive(:game_over).twice
         expect(game_object).to receive(:play_game_helper).twice
         game_object.play_game
